@@ -11,8 +11,8 @@ api_id = int(os.getenv("API_ID"))
 api_hash = os.getenv("API_HASH")
 bot_token = os.getenv("BOT_TOKEN")
 
-source_channel = "Moshepargod"  # בלי @
-target_channel = "forfkf46ig"   # בלי @
+source_channel = -1001778387051  # בלי @
+target_channel = -1002255057047   # בלי @
 
 # התחברות עם session של המשתמש
 client = TelegramClient("user_session", api_id, api_hash)
