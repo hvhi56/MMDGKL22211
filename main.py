@@ -1,26 +1,37 @@
 import asyncio
 from telethon import TelegramClient, events
 from keep_alive import keep_alive
+import os
+from dotenv import load_dotenv
 
-# --- הגדרות הבוט והערוצים ---
-api_id = 25863606
-api_hash = '34f981178528c8167680f1429bb526c6'
-bot_token = '8000668793:AAE428DuqA1E21e8nDmakzguoNX40hJvXR4'
+# טוען משתנים מקובץ .env
+load_dotenv()
 
-source_channel = 'Moshepargod'  # בלי @
-target_channel = 'forfkf46ig'   # בלי @
+api_id = int(os.getenv("API_ID"))
+api_hash = os.getenv("API_HASH")
+bot_token = os.getenv("BOT_TOKEN")
 
-# --- התחברות ל-Telegram עם בוט ---
-client = TelegramClient('bot', api_id, api_hash).start(bot_token=bot_token)
+source_channel = "Moshepargod"  # בלי @
+target_channel = "forfkf46ig"   # בלי @
 
-# --- האירוע שמאזין להודעות חדשות ---
+# התחברות כמשתמש רגיל עם session קיים
+client = TelegramClient("user_session", api_id, api_hash)
+
+# התחברות עם בוט לשליחה
+bot = TelegramClient("bot_session", api_id, api_hash).start(bot_token=bot_token)
+
 @client.on(events.NewMessage(chats=source_channel))
-async def handler(event):
-    await client.send_message(target_channel, event.message)
+async def forward(event):
+    await bot.send_message(target_channel, event.message)
 
-# --- מפעיל שרת Flask קטן כדי לשמור על התהליך פעיל (לרמות את Render)
-keep_alive()
+async def main():
+    await client.start()
+    print("User session connected.")
+    await bot.start()
+    print("Bot connected.")
+    print("Bot is running...")
 
-# --- הרצת הלקוח של Telethon לנצח ---
-print("Bot is running...")
-client.run_until_disconnected()
+    keep_alive()
+    await client.run_until_disconnected()
+
+asyncio.run(main())
