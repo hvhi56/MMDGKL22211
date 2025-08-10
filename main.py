@@ -17,7 +17,7 @@ target_channel = -1002255057047   # בלי @
 # התחברות עם session של המשתמש
 client = TelegramClient("user_session", api_id, api_hash)
 
-# התחברות עם בוט לשליחה
+# התחברות עם בוט (עדיין נתחבר אליו לשימור הטריק, אבל לא נשתמש בו לשליחה)
 bot = TelegramClient("bot_session", api_id, api_hash).start(bot_token=bot_token)
 
 @client.on(events.NewMessage(chats=source_channel))
@@ -27,7 +27,7 @@ async def forward(event):
 
         # אם יש מדיה (תמונה, וידאו, קובץ וכו')
         if message.media:
-            await bot.send_file(
+            await client.send_file(
                 target_channel,
                 file=message.media,
                 caption=message.text or "",  # טקסט אם יש
@@ -36,7 +36,7 @@ async def forward(event):
         else:
             # אם זה טקסט בלבד
             if message.text:
-                await bot.send_message(target_channel, message.text)
+                await client.send_message(target_channel, message.text)
 
     except Exception as e:
         print("❌ שגיאה בשליחה:", e)
@@ -44,7 +44,7 @@ async def forward(event):
 async def start_clients():
     await client.start()
     print("✅ User session connected.")
-    await bot.start()
+    await bot.start()  # משאירים את זה כדי שהבוט גם יהיה מחובר
     print("🤖 Bot connected.")
     print("📡 Bot is running...")
 
