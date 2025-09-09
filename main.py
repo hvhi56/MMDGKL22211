@@ -2,6 +2,7 @@ import asyncio
 from telethon import TelegramClient, events
 from keep_alive import keep_alive
 import os
+import time
 from dotenv import load_dotenv
 
 # טען משתנים מקובץ .env
@@ -67,4 +68,11 @@ async def start_clients():
 
 # ניהול לולאת האירועים – בצורה ידנית
 loop = asyncio.get_event_loop()
-loop.run_until_complete(start_clients())
+
+while True:
+    try:
+        loop.run_until_complete(start_clients())
+    except Exception as e:
+        print("❌ שגיאה כללית בלולאה הראשית:", e)
+        import time
+        time.sleep(5)  # לחכות 5 שניות לפני ניסיון נוסף
