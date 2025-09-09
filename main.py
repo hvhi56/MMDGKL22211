@@ -74,5 +74,4 @@ while True:
         loop.run_until_complete(start_clients())
     except Exception as e:
         print("❌ שגיאה כללית בלולאה הראשית:", e)
-        import time
         time.sleep(5)  # לחכות 5 שניות לפני ניסיון נוסף
