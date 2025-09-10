@@ -16,7 +16,7 @@ source_channel = -1001778387051  # בלי @
 target_channel = -1002255057047  # בלי @
 
 # התחברות עם session של המשתמש
-client = TelegramClient("user_session", api_id, api_hash)
+client = TelegramClient("my_session", api_id, api_hash)
 
 # התחברות עם בוט (עדיין נתחבר אליו לשימור הטריק, אבל לא נשתמש בו לשליחה)
 bot = TelegramClient("bot_session", api_id, api_hash).start(bot_token=bot_token)
