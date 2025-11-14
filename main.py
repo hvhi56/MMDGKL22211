@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 api_id = int(os.getenv("API_ID"))
-api_hash = os.getenv("API_HASH"))
+api_hash = os.getenv("API_HASH")
 bot_token = os.getenv("BOT_TOKEN")
 
 source_channel = -1001778387051  # בלי @
